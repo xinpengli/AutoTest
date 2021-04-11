@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+  
+<suite name="rpctest" verbose="1" parallel="tests" thread-count="1">
+  <test name="2.5.3">
+      	<parameter name="ip" value = "127.0.0.1"/> 
+      	<parameter name="port" value = "8082"/> 
+      	 <parameter name="clientCode" value = "birken"/>    
+       <parameter name="warehouseCode" value = "ACCA"/>
+       
+       <parameter name="userId" value = "acca"/>
+ 	   <parameter name="userKey" value = "111111"/> 
+  <classes> 		      
+       <class name="com.taishite.autotest.AutotestApplicationTests">
+           <parameter name="receiptCode" value = "test001"/>     
+       </class>
+   </classes>
+  </test>
+</suite>
+
