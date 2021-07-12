@@ -1,7 +1,7 @@
 #logging:
 #  config: classpath:config/log/log4j2.xml
 server.:
-  port: 8081
+  port: 8089
   servlet.:
     context-path: /weather
 

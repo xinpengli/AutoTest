@@ -20,7 +20,7 @@ public class weather {
     @RequestMapping(value = "/getWeather")
     public JSONObject getWeather(@RequestBody  Map<String, String> requestMap){
         Map<String,String> result= new HashMap<>();
-        String city= requestMap.get("city");
+        String city= requestMap.get("cityId");
         String userId= requestMap.get("userId");
         JSONObject jsonObject= new JSONObject();
         if (("test").equals(userId)){
