@@ -14,9 +14,9 @@ class AutotestApplicationTests extends AbstractTestNGSpringContextTests{
 	void contextLoads() {
     int a =3;
     int b =3;
+		String driverPath =this.getClass().getClassLoader().getResource("").getPath();
+		log.info((driverPath));
 
-		log.info("运行测试"+(a+b));
-		Assert.assertEquals(a,b);
 
 	}
 

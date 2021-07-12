@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -14,7 +15,7 @@
 	<name>autotest</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -66,7 +67,26 @@
 			<version>6.9.10</version>
 			<scope>test</scope>
 		</dependency>
+		<!--        Selenium     -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.141.59</version>
+		</dependency>
+<!--json-->
 
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.76</version>
+		</dependency>
+		<!--jsonpath提取器-->
+
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>2.4.0</version>
+		</dependency>
 	</dependencies>
 
 
@@ -87,5 +107,142 @@
 			<!--</plugin>-->
 		<!--</plugins>-->
 	<!--</build>-->
+	<build>
+		<finalName>weather</finalName>
+		<plugins>
+			<!-- mybatis-generator myba-->
+			<!--<plugin>-->
+				<!--<groupId>org.mybatis.generator</groupId>-->
+				<!--<artifactId>mybatis-generator-maven-plugin</artifactId>-->
+				<!--<version>${version.mybatis-generator}</version>-->
+				<!--<configuration>-->
+					<!--<configurationFile>src/main/resources/config/mybatis-generator/generatorConfig.xml</configurationFile>-->
+					<!--&lt;!&ndash;允许移动生成的文件&ndash;&gt;-->
+					<!--<verbose>true</verbose>-->
+					<!--&lt;!&ndash;允许覆盖生成的文件&ndash;&gt;-->
+					<!--<overwrite>true</overwrite>-->
+				<!--</configuration>-->
+				<!--&lt;!&ndash; 自动生成 &ndash;&gt;-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>Generate MyBatis Artifacts</id>-->
+						<!--<goals>-->
+							<!--<goal>generate</goal>-->
+						<!--</goals>-->
+
+					<!--</execution>-->
+				<!--</executions>-->
+
+				<!--<dependencies>-->
+					<!--<dependency>-->
+						<!--<groupId>mysql</groupId>-->
+						<!--<artifactId>mysql-connector-java</artifactId>-->
+						<!--<version>${version.mysql}</version>-->
+					<!--</dependency>-->
+					<!--<dependency>-->
+						<!--<groupId>tk.mybatis</groupId>-->
+						<!--<artifactId>mapper</artifactId>-->
+						<!--<version>4.0.0</version>-->
+					<!--</dependency>-->
+
+
+				<!--</dependencies>-->
+			<!--</plugin>-->
+			<!--测试插件-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.7.1</version>
+				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>testng.xml</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
+			</plugin>
+			<!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<classesDirectory>target/classes/</classesDirectory>
+					<excludes>
+						<exclude>config/</exclude>
+						<exclude>*.xml</exclude>
+						<exclude>*.properties</exclude>
+						<exclude>*.yml</exclude>
+					</excludes>
+					<archive>
+						<manifest>
+							<mainClass>com.taishite.autotest.AutotestApplication</mainClass>
+							<!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
+							<useUniqueVersions>false</useUniqueVersions>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>./resources/lib</classpathPrefix>
+						</manifest>
+						<!-- 指定classpath -->
+						<manifestEntries>
+							<Class-Path>./resources/</Class-Path>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<!-- 把jar文件输出到外部目录 -->
+						<configuration>
+							<type>jar</type>
+							<includeTypes>jar</includeTypes>
+							<outputDirectory>
+								${project.build.directory}/resources/lib
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- 把jar所依赖的配置文件打在jar的外部目录 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-config-files</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<!-- 输出目录 -->
+							<outputDirectory>${project.build.directory}/resources</outputDirectory>
+							<resources>
+								<resource>
+									<!-- 要打包的目录 -->
+									<directory>${basedir}/src/main/resources</directory>
+									<includes>
+										<!-- 要打包的文件 -->
+										<include>config/**/*.*</include>
+										<include>*.xml</include>
+										<include>*.properties</include>
+										<include>*.yml</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

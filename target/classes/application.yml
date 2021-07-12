@@ -1,0 +1,49 @@
+#logging:
+#  config: classpath:config/log/log4j2.xml
+server.:
+  port: 8081
+  servlet.:
+    context-path: /weather
+
+#spring:
+#  datasource:
+#      name: athena
+#      driver-class-name: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://172.16.3.19:3306/athena?useUnicode=true&characterEncoding=utf-8&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull
+#      username: root
+#      password: root
+#      type: com.alibaba.druid.pool.DruidDataSource
+#      connectionProperties: druid.stat.mergeSql=true
+#  task:
+#      pool:
+#        max-threads: 25
+#        queue-capacity: 100
+#        keep-alive: 10s
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/templates/
+#    suffix: .html
+
+# 根据地圖解析模式初始化货架，Database,Xml,NOShelfArea ,null
+map.resolver: Database
+# 默认加载地图服务ip
+http.server: 172.16.3.19
+http.port: 8895
+# socket客户端配置启动
+client.socket-api:
+ name: socket-api-client
+ enabled: true
+ port: 8896
+ server-ip : 172.16.3.19
+
+#pagehelper:
+#  helper-dialect: mysql
+#  params: count=countSql
+#  reasonable: true
+#  support-methods-arguments: true
+#  开启驼峰转换，数据库中的字段有下划线时，自动匹配entity中的驼峰数据，（去下划线，mybatis注解版会遇到这个问题）
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true
+
+
