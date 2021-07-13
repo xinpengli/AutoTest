@@ -1,0 +1,7 @@
+com\taishite\autotest\controller\SuanFa.class
+com\taishite\autotest\StudentResources.class
+com\taishite\autotest\controller\weather.class
+com\taishite\autotest\controller\Student.class
+com\taishite\autotest\StudentEntity.class
+com\taishite\autotest\common\FileUtile.class
+com\taishite\autotest\AutotestApplication.class

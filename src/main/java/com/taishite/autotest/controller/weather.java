@@ -7,7 +7,6 @@ import com.taishite.autotest.common.FileUtile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,8 +34,9 @@ public class weather {
             }
 
 
-            //从跟目录(编译后的target下class目录就是根目录)/获取resource下的json.txt文件的url
-            URL url= this.getClass().getResource("/weather/json.txt");
+            //从跟目录(编译后的target下class目录就是根目录)/获取resource下的json.txt文件的url,需要跟pom中指定class目录， 不能把资源文件打包到整体jar里，否则报找不到文件
+            //注意都把配置文件放在config下否则，pom复制资源不准，导致jar包起来时
+            URL url= this.getClass().getResource("/config/weather/json.txt");
            String weatherString= FileUtile.readJsonFile(url.getPath());
              jsonObject = JSON.parseObject(weatherString);
              //修改json值

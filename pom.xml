@@ -167,10 +167,12 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
 					<classesDirectory>target/classes/</classesDirectory>
+					<!--注意此时配置资源文件，例如json.txt需要读取路径，不能把资源文件config打包，同时需要在复制资源到外部文件夹中-->
 					<excludes>
 						<exclude>config/</exclude>
 						<exclude>*.xml</exclude>
 						<exclude>*.properties</exclude>
+						<exclude>*.txt</exclude>
 						<exclude>*.yml</exclude>
 					</excludes>
 					<archive>
@@ -230,9 +232,10 @@
 									<!-- 要打包的目录 -->
 									<directory>${basedir}/src/main/resources</directory>
 									<includes>
-										<!-- 要打包的文件 -->
+										<!-- 要打包的文件 ，必须把资源文件config中路径使用的复制出来-->
 										<include>config/**/*.*</include>
 										<include>*.xml</include>
+										<include>*.txt</include>
 										<include>*.properties</include>
 										<include>*.yml</include>
 									</includes>
